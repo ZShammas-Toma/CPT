@@ -1,0 +1,12 @@
+void setup() {
+  size(1300, 700);
+}
+
+void draw() {
+  //Scenery
+  
+  //Main Character
+  
+  //Main Villain
+  
+  //

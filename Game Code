@@ -10,3 +10,6 @@ void draw() {
   //Main Villain
   
   //
+void mousePressed() {
+  println(mouseX, mouseY); 
+}

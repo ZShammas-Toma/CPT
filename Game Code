@@ -1,15 +1,34 @@
+int x;
+int y;
 void setup() {
   size(1300, 700);
+  x = 180;
+  y = 400;
 }
 
 void draw() {
   //Scenery
+  background(0);
+  //Sky
   
-  //Main Character
+  //Grass
   
+  //Trees
+  
+  //Main Character: Dexter
+  ellipse(x, y, 90, 90);
+  rect(1000, 400, 90, 90);
   //Main Villain
-  
-  //
+}
+
+void keyPressed() {
+  if (key == CODED) {
+    if (keyCode == RIGHT) {
+      x = x + 25;
+    }
+  }
+}
+    
 void mousePressed() {
   println(mouseX, mouseY); 
 }

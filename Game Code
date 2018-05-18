@@ -27,6 +27,11 @@ void keyPressed() {
       x = x + 25;
     }
   }
+  if (key == CODED) {
+    if (keyCode == LEFT) {
+      x = x - 25;
+    }
+  }
 }
     
 void mousePressed() {

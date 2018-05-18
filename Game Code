@@ -1,5 +1,7 @@
-int x;
-int y;
+float x;
+float y;
+float ySpeed;
+float xSpeed;
 void setup() {
   size(1300, 700);
   x = 180;
@@ -7,6 +9,9 @@ void setup() {
 }
 
 void draw() {
+  ySpeed += 1;
+  if (y <= 45) ySpeed = -ySpeed;
+  
   //Scenery
   background(0);
   //Sky

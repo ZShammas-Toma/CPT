@@ -19,6 +19,15 @@ void draw() {
   //Trees
   //Main Character
   ellipse(x, y, 90, 90);
+  if (keyCode == RIGHT || x == 180 || y < 400) {
+  fill(0);
+  ellipse(x + 20, y - 5, 10, 10);
+  }
+  if (keyCode == LEFT) {
+    fill(0);
+    ellipse(x - 20, y - 5, 10, 10);
+  }
+  fill(225);
   rect(1000, 400, 90, 90);
   //Main Villain
   }

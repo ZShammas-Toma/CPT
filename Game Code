@@ -12,22 +12,16 @@ void draw() {
   ySpeed += 1;
   if (y <= 45) ySpeed = -ySpeed;
   //Scenery
+  translate(-x + 180, 0);
   background(0);
   //Sky
-  
   //Grass
-  
   //Trees
-  
-  //Main Character: Dexter
-  if (keyCode == RIGHT) {
-  x = x + 25;
-  translate(x, 0);
-  }
+  //Main Character
   ellipse(x, y, 90, 90);
   rect(1000, 400, 90, 90);
   //Main Villain
-}
+  }
 
 void keyPressed() {
   if (key == CODED) {

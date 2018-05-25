@@ -28,11 +28,15 @@ void draw() {
   }
   //Clues
   fill(225);
-  rect(1000, 400, 90, 90);
+  rect(1000, 100, 90, 90);
   //Obstacles
+  rect(1000, 400, 90, 90);
   //Touch Die
+  if (1000 < x && x < 1090) {
+    background(225);
+  }
   //Main Villain
-}
+  }
 
 
 

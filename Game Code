@@ -10,27 +10,28 @@ void setup() {
 
 void draw() {
   ySpeed += 1;
-  if (y <= 45) ySpeed = -ySpeed;
+  if (y <= 45) ySpeed = -ySpeed;  
   //Scenery
   translate(-x + 180, 0);
   background(0);
   //Sky
   //Grass
   //Trees
-  //Main Character
+  //Main Character: Dexter
   ellipse(x, y, 90, 90);
-  if (keyCode == RIGHT || x == 180 || y < 400) {
+  if (keyCode == RIGHT || y < 400 || x == 180) {
   fill(0);
   ellipse(x + 20, y - 5, 10, 10);
   }
-  if (keyCode == LEFT) {
+  if (keyCode == LEFT && y == 400) {
     fill(0);
     ellipse(x - 20, y - 5, 10, 10);
   }
   fill(225);
   rect(1000, 400, 90, 90);
   //Main Villain
-  }
+}
+
 
 void keyPressed() {
   if (key == CODED) {

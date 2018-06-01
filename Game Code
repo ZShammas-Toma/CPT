@@ -1,3 +1,4 @@
+
 PVector playerLoc;
 PVector playerSpeed;
 PVector ball;
@@ -67,7 +68,7 @@ void keyPressed() {
     if (keyCode == LEFT) {
       playerLoc.x = playerLoc.x - 25;
     }
-    if (playerLoc.y >= 280) {
+    if (playerLoc.y >= 280 && playerSpeed.y == 0) {
       if (keyCode == UP) {
       playerSpeed.y = -10;
       }

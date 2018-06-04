@@ -1,7 +1,7 @@
-
 PVector playerLoc;
 PVector playerSpeed;
 PVector ball;
+boolean walk[] = {false, false, false};
 
 void setup() {
   size(1300, 700);
@@ -61,21 +61,48 @@ void draw() {
 
 
 void keyPressed() {
-  if (key == CODED) {
-    if (keyCode == RIGHT) {
-      playerLoc.x = playerLoc.x + 25;
+    if (key == 'd') {
+      println("heyo");
+      walk[0] = true;
     }
-    if (keyCode == LEFT) {
-      playerLoc.x = playerLoc.x - 25;
+    if (key == 'a') {
+      walk[1] = true;
     }
     if (playerLoc.y >= 280 && playerSpeed.y == 0) {
-      if (keyCode == UP) {
-      playerSpeed.y = -10;
+      if (key == 'w') {
+      walk[2] = true;
       }
     }
+}
+
+void keyReleased() {   
+    if (key == 'a') {
+      walk[0] = false;
+    }
+    if (key == 'd') {
+      walk[1] = false;
+    }
+    if (playerLoc.y >= 280 && playerSpeed.y == 0) {
+      if (key == 'w') {
+      walk[2] = false;
+      }
+    }
+}
+
+void movement() {
+  if (walk[0] == true) {
+    playerLoc.x = playerLoc.x + 4;
   }
-}  
-    
+  
+  if (walk[1] == true) {
+    playerLoc.x = playerLoc.x - 4;
+  }
+  
+  if (walk[2] == true) {
+    playerLoc.y = playerLoc.y - 25;
+  }
+}
+
 void mousePressed() {
   println(mouseX, mouseY); 
 }

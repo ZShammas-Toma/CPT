@@ -11,6 +11,7 @@ void setup() {
 }
 
 void draw() {
+  movement();
   //Gravity
   playerLoc.y += playerSpeed.y;
   playerSpeed.y += 0.3;
@@ -35,13 +36,15 @@ void draw() {
   //Main Character: Dexter
   ellipse(playerLoc.x, playerLoc.y, 90, 90);
   //Moving Character Left and Right
-  if (keyCode == RIGHT || keyCode == UP || playerLoc.x == 180) {
+  //Make if statements easier to read
+  if (walk[0] || walk[2] && walk[1] == false && walk[2] == false || walk[0] && walk[2] && walk[1] == false || walk[1] == false && playerLoc.y == 400) {
     fill(0);
     ellipse(playerLoc.x + 20, playerLoc.y - 5, 10, 10);
   }
-  if (keyCode == LEFT && playerLoc.y == 400) {
+  if (walk[1] || walk[1] && walk[2] && walk[0] == false) {
     fill(0);
     ellipse(playerLoc.x - 20, playerLoc.y - 5, 10, 10);
+    ;
   }
   //Clues
   fill(225);
@@ -56,49 +59,46 @@ void draw() {
   //ellipse (ball.x, ball.y, 90, 90);
  
   //Main Villain
-  }
+  println(walk[0]);  
+}
 
 
 
 void keyPressed() {
-    if (key == 'd') {
-      println("heyo");
+    if (keyCode == RIGHT) {
       walk[0] = true;
     }
-    if (key == 'a') {
+    if (keyCode == LEFT) {
       walk[1] = true;
     }
-    if (playerLoc.y >= 280 && playerSpeed.y == 0) {
-      if (key == 'w') {
-      walk[2] = true;
-      }
+    if (keyCode == UP) {
+    walk[2] = true;
     }
+    
 }
 
 void keyReleased() {   
-    if (key == 'a') {
+    if (keyCode == RIGHT) {
       walk[0] = false;
     }
-    if (key == 'd') {
+    if (keyCode == LEFT) {
       walk[1] = false;
     }
-    if (playerLoc.y >= 280 && playerSpeed.y == 0) {
-      if (key == 'w') {
-      walk[2] = false;
-      }
+    if (keyCode == UP) {
+    walk[2] = false;
     }
 }
 
 void movement() {
-  if (walk[0] == true) {
+  if (walk[0]) {
     playerLoc.x = playerLoc.x + 4;
   }
   
-  if (walk[1] == true) {
+  if (walk[1]) {
     playerLoc.x = playerLoc.x - 4;
   }
   
-  if (walk[2] == true) {
+  if (walk[2]) {
     playerLoc.y = playerLoc.y - 25;
   }
 }

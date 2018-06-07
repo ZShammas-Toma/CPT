@@ -37,7 +37,7 @@ void draw() {
   ellipse(playerLoc.x, playerLoc.y, 90, 90);
   //Moving Character Left and Right
   //Make if statements easier to read
-  if (walk[0] || walk[2] && walk[1] == false && walk[2] == false || walk[0] && walk[2] && walk[1] == false || walk[1] == false && playerLoc.y == 400) {
+  if (walk[0] || walk[2] && walk[1] == false && walk[0] == false || walk[2] && walk[1] == false && walk[2] == false || walk[0] && walk[2] && walk[1] == false || walk[1] == false && playerLoc.y == 400) {
     fill(0);
     ellipse(playerLoc.x + 20, playerLoc.y - 5, 10, 10);
   }

@@ -2,41 +2,39 @@ PVector playerLoc;
 PVector playerSpeed;
 PVector ball;
 boolean walk[] = {false, false, false};
+boolean click[] = {false};
 
 void setup() {
-  size(1300, 700);
-  playerSpeed = new PVector (0, 0);
-  playerLoc = new PVector (180, 400);
-  ball = new PVector (width/2, height/2 + 50);
+size(1300, 700);
+playerSpeed = new PVector (0, 0);
+playerLoc = new PVector (180, 400);
 }
 
 void draw() {
+  //Calling the movement method
   movement();
   //Gravity
   playerLoc.y += playerSpeed.y;
   playerSpeed.y += 0.3;
-  
   if (playerLoc.y <= 300) {
-    playerSpeed.y += 2; 
+    playerSpeed.y += 2;
   }
-  
   if (playerLoc.y >= 400) {
     playerSpeed.y = 0;
   }
-  
   if (playerLoc.y >= 400) {
     playerLoc.y = 400;
   }
-  
-  if (playerLoc.y <= 45) playerSpeed.y = -playerSpeed.y;  
+  if (playerLoc.y <= 45) {
+    playerSpeed.y = -playerSpeed.y;
+  }
   //Moving Display
   translate(-playerLoc.x + 180, 0);
-  //
+  //Drawing Scenery
   background(0);
-  //Main Character: Dexter
+  //Drawing The Main Character: Dexter
   ellipse(playerLoc.x, playerLoc.y, 90, 90);
-  //Moving Character Left and Right
-  //Make if statements easier to read
+  //If statements for the character facing left and right (make easier to read)
   if (walk[0] || walk[2] && walk[1] == false && walk[0] == false || walk[2] && walk[1] == false && walk[2] == false || walk[0] && walk[2] && walk[1] == false || walk[1] == false && playerLoc.y == 400) {
     fill(0);
     ellipse(playerLoc.x + 20, playerLoc.y - 5, 10, 10);
@@ -44,65 +42,66 @@ void draw() {
   if (walk[1] || walk[1] && walk[2] && walk[0] == false) {
     fill(0);
     ellipse(playerLoc.x - 20, playerLoc.y - 5, 10, 10);
-    ;
   }
-  //Clues
+  //Opening the text box to explain clues when clicked + Drawing Clues
+  if (click[0] == false) {
+    fill(225);
+    rect(1000, 100, 90, 90);
+  } 
+  if (click[0] == true) {
+    fill(225);
+    rect(700, 250, 400, 100);
+  }
+  fill(0);
+  text("You found a clue!", 900, 300);
+  //Drawing Obstacles
   fill(225);
-  rect(1000, 100, 90, 90);
-  //Obstacles
   rect(1000, 400, 90, 90);
-  //Touch
+  //Touching obstacles + Game over screen
   if (1000 < playerLoc.x && playerLoc.x < 1090) {
-    background(225);
+  background(225);
   }
-  //
-  //ellipse (ball.x, ball.y, 90, 90);
- 
-  //Main Villain
-  println(walk[0]);  
+  //Drawing the Main Villain
 }
-
-
 
 void keyPressed() {
-    if (keyCode == RIGHT) {
-      walk[0] = true;
-    }
-    if (keyCode == LEFT) {
-      walk[1] = true;
-    }
-    if (keyCode == UP) {
+  if (keyCode == RIGHT) {
+    walk[0] = true;
+  }
+  if (keyCode == LEFT) {
+    walk[1] = true;
+  }
+  if (keyCode == UP) {
     walk[2] = true;
-    }
-    
+  }
 }
 
-void keyReleased() {   
-    if (keyCode == RIGHT) {
-      walk[0] = false;
-    }
-    if (keyCode == LEFT) {
-      walk[1] = false;
-    }
-    if (keyCode == UP) {
-    walk[2] = false;
-    }
+void keyReleased() {
+  if (keyCode == RIGHT) {
+    walk[0] = false;
+  }
+  if (keyCode == LEFT) {
+    walk[1] = false;
+  }
+  if (keyCode == UP) {
+  walk[2] = false;
+  }
 }
 
 void movement() {
   if (walk[0]) {
     playerLoc.x = playerLoc.x + 4;
   }
-  
   if (walk[1]) {
     playerLoc.x = playerLoc.x - 4;
   }
-  
   if (walk[2]) {
     playerLoc.y = playerLoc.y - 25;
   }
 }
 
 void mousePressed() {
-  println(mouseX, mouseY); 
+  if (mousePressed == true) {
+    click[0] = true;
+  }
 }

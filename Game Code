@@ -101,7 +101,7 @@ void movement() {
 }
 
 void mousePressed() {
-  if (mousePressed == true) {
+  if (mouseX > 1000 && mouseX < 1090 && mouseY > 100 && mouseY < 190) {
     click[0] = true;
   }
 }

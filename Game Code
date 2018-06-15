@@ -1,13 +1,15 @@
-PVector playerLoc;
+PVector playerLoc; 
 PVector playerSpeed;
 PVector ball;
 boolean walk[] = {false, false, false};
 boolean click[] = {false};
+PImage forestBackground;
 
 void setup() {
 size(1300, 700);
 playerSpeed = new PVector (0, 0);
 playerLoc = new PVector (180, 400);
+forestBackground = loadImage("forestBackground.jpg");
 }
 
 void draw() {
@@ -39,10 +41,15 @@ void draw() {
   } 
   if (click[0] == true) {
     fill(225);
-    rect(700, 250, 400, 100);
+    rect(playerLoc.x - 180, 580, 300, 100);
     fill(0);
     text("You found a clue!", 900, 300);
   }
+  pushMatrix();
+  scale(1);
+  image(forestBackground, 0, 0);
+  image(forestBackground, 2197, 0);
+  popMatrix();
   //Drawing Obstacles
   fill(225);
   rect(1000, 430, 90, 90);
@@ -119,7 +126,9 @@ void movement() {
 
 void mousePressed() {
   println(mouseX, mouseY);
-  if (mouseX > 1000 - playerLoc.x && mouseX - playerLoc.x < 1090 && mouseY > 100 && mouseY < 190) {
+  println(playerLoc.x);
+  if (mouseX > 1000 - playerLoc.x + 180 && mouseX < 1090 - playerLoc.x + 180 && mouseY > 100 && mouseY < 190) {
+    println(frameCount + ": CLICKED");
     click[0] = true;
   }
 }

@@ -1,0 +1,244 @@
+PVector playerLoc;
+PVector playerSpeed;
+PVector obstacle;
+boolean walk[] = {false, false, false};
+boolean click[] = {false, false, false}; //i added 2 extra clicks here for start over and main menu
+PVector[] boulders;
+PVector[] obstacles;
+int i;
+
+void setup() {
+  size(1300, 700);
+  playerSpeed = new PVector (0, 0);
+  playerLoc = new PVector (180, 400);
+  obstacle = new PVector (1000, 430);
+
+  obstacles = new PVector[8];
+  for (i = 0; i < obstacles.length; i++) {
+    float ox = (1600);
+    float oy = (430);
+    obstacles[i] = new PVector(ox, oy);
+  }
+
+  boulders = new PVector[6];
+  for (i = 0; i < boulders.length; i++) {
+    float bx = (3000);
+    float by = (430);
+    boulders[i] = new PVector(bx, by); 
+  }
+}
+
+void draw() {
+  //Calling the movement method
+  movement();
+  //Gravity
+  playerLoc.y += playerSpeed.y;
+  playerSpeed.y += 0.3;
+  if (playerLoc.y <= 300) {
+    playerSpeed.y += 1;
+  }
+  if (playerLoc.y >= 400) {
+    playerSpeed.y = 0;
+  }
+  if (playerLoc.y >= 400) {
+    playerLoc.y = 400;
+  }
+  if (playerLoc.y <= 45) {
+    playerSpeed.y = -playerSpeed.y;
+  }
+  //Moving Display
+  translate(-playerLoc.x + 180, 0);
+  //Drawing Scenery
+  background(0);
+  //Opening the text box to explain clues when clicked pn by the mouse + Drawing Clues
+  if (click[0] == false) {
+    fill(225);
+    rect(1000, 100, 90, 90);
+  } 
+  if (click[0] == true) {
+    fill(225);
+    rect(700, 250, 400, 100);
+    fill(0);
+    text("You found a clue!", 900, 300);
+  }
+  //Touching obstacles + Game over screen
+  //d, d1, and d2 are all distances between obstacle and character
+  float d = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 39, playerLoc.y + 20);  
+  float d1 = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 20, playerLoc.y + 90);
+  float d2 = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 20, playerLoc.y + 90);
+  //obstacle
+  fill(225);
+  rect(obstacle.x, obstacle.y, 90, 90);
+
+  //when collision happens start over and quit game screen pop up & when you don't click
+  if (click[1] == false && (d <= 82 || d1 <= 70 || d2 <= 70)) {
+    fill(225);
+    rect(obstacle.x + 350, obstacle.y - 200, 200, 100);
+    textSize(28);
+    fill(102);
+    text("Start Over", obstacle.x + 380, obstacle.y - 140);
+    fill(225);
+    rect(obstacle.x + 350, obstacle.y - 50, 200, 100);
+    textSize(28);
+    fill(102);
+    text("Quit Game", obstacle.x + 380, obstacle.y + 10);
+  }
+  //setting character to start of game
+  if (click[1] == true && (d <= 82 || d1 <= 70 || d2 <= 70)) {
+    println("works");
+    playerLoc.x = 180;
+    playerLoc.y = 400;
+    walk[0] = true;
+    walk[1] = true;
+    walk[2] = true;
+  } 
+  //when collision happens start over and quit game screen pop up & when you don't click
+  if (click[2] == false && (d <= 82 || d1 <= 70 || d2 <= 70)) {
+    fill(225);
+    rect(obstacle.x + 350, obstacle.y - 200, 200, 100);
+    textSize(28);
+    fill(102);
+    text("Start Over", obstacle.x + 380, obstacle.y - 140);
+    fill(225);
+    rect(obstacle.x + 350, obstacle.y - 50, 200, 100);
+    textSize(28);
+    fill(102);
+    text("Quit Game", obstacle.x + 380, obstacle.y + 10);
+  }
+  //use for returning to main menu
+  if (click[2] == true && (d <= 82 || d1 <= 70 || d2 <= 70)) {
+  } 
+  //Drawing the Main Villain
+  //Drawing The Main Character: Dexter
+  noStroke();
+  fill(222, 168, 121, 200); //Head
+  triangle(playerLoc.x + 30, playerLoc.y, playerLoc.x + 50, playerLoc.y - 50, playerLoc.x + 5, playerLoc.y - 50);
+  fill(#191970); //Body
+  rect(playerLoc.x + 2, playerLoc.y - 20, 58, 80);
+  rect(playerLoc.x + 12.5, playerLoc.y + 60, 15, 60); //Legs
+  rect(playerLoc.x + 32, playerLoc.y + 60, 15, 60);
+
+  //If statements for the character facing left and right (make easier to read)
+  if (walk[0] || walk[2] && walk[1] == false && walk[0] == false || walk[2] && walk[1] == false && walk[2] == false || walk[0] && walk[2] && walk[1] == false || walk[1] == false && playerLoc.y == 400 || click[1] == true) {
+    fill(0);
+    ellipse(playerLoc.x + 37, playerLoc.y - 40, 10, 10);
+    stroke(0);
+    strokeWeight(3);
+    line(playerLoc.x + 39, playerLoc.y - 28, playerLoc.x + 29, playerLoc.y - 28);
+  }
+  if (walk[1] || walk[1] && walk[2] && walk[0] == false) {
+    noStroke();
+    fill(0);
+    ellipse(playerLoc.x + 19, playerLoc.y - 40, 10, 10);
+    stroke(0);
+    strokeWeight(3);
+    line(playerLoc.x + 17, playerLoc.y - 28, playerLoc.x + 26, playerLoc.y - 28);
+  }
+  fill(#330000); //Hat
+  rect(playerLoc.x + 3.5, playerLoc.y - 53, 50, 10);
+  rect(playerLoc.x + 13, playerLoc.y - 63, 30, 20);
+  //boulders
+  for (i = 0; i < boulders.length; i++) {
+    //boulders[i].add(-2, 0);
+    boulders[i].x += -2;
+    fill(225);
+    ellipse(boulders[i].x, boulders[i].y, 70, 70);
+     ellipse(boulders[i].x + 600, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 1200, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 1800, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 2400, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 3000, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 3600, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 4200, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 4800, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 5400, boulders[i].y, 70, 70);
+    ellipse(boulders[i].x + 6000, boulders[i].y, 70, 70);
+    //for (boulders[i].x = 3000; boulders[i].x < 15000; boulders[i].x += 600) {
+    //fill(225);
+    //ellipse(boulders[i].x, boulders[i].y, 70, 70);
+    //boulders[i].x += -200;
+    //}
+  }
+
+  for (i = 0; i < obstacles.length; i++) {
+    for (obstacles[i].x = 1600; obstacles[i].x < 7600; obstacles[i].x += 600) {
+      fill(225);
+      rect(obstacles[i].x, obstacles[i].y, 90, 90);
+    }
+  }
+  //  noStroke();
+  //fill(255);
+  //ellipse(boulders[i].x, boulders[i].y, 30, 30);
+  //ellipse(boulders[i].x + 300, boulders[i].y, 30, 30);
+  //float bd = dist(boulders[i].x + 45, boulders[i].y + 45, playerLoc.x + 39, playerLoc.y + 20);  
+  //float bd1 = dist(boulders[i].x + 45, boulders[i].y + 45, playerLoc.x + 20, playerLoc.y + 90);
+  //float bd2 = dist(boulders[i].x + 45, boulders[i].y + 45, playerLoc.x + 20, playerLoc.y + 90);
+}
+
+void keyPressed() {
+  if (keyCode == RIGHT) {
+    walk[0] = true;
+  }
+  if (keyCode == LEFT) {
+    walk[1] = true;
+  }
+  if (keyCode == UP) {
+    walk[2] = true;
+  }
+}
+
+void keyReleased() {
+  if (keyCode == RIGHT) {
+    walk[0] = false;
+  }
+  if (keyCode == LEFT) {
+    walk[1] = false;
+  }
+  if (keyCode == UP) {
+    walk[2] = false;
+  }
+}
+
+void movement() {
+  //variables set again here
+
+  float d = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 39, playerLoc.y + 20);  
+  float d1 = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 20, playerLoc.y + 90);
+  float d2 = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 20, playerLoc.y + 90);
+  //error is right here down below with new variables for boulders distance
+  //float bd = dist(boulders[i].x, boulders[i].y, playerLoc.x + 39, playerLoc.y + 20);  
+  //float bd1 = dist(boulders[i].x, boulders[i].y, playerLoc.x + 20, playerLoc.y + 90);
+  //float bd2 = dist(boulders[i].x, boulders[i].y, playerLoc.x + 20, playerLoc.y + 90);
+
+  // (d>= 82...) is when the distance between obstacle and player is greater than certain number, player can move
+  //used to inhibit player movement when collision happens
+  //second part with bd, bd1, and bd2 is for distance between boulders but variables dont work yet so this doesnt get put into play
+  if (walk[0] && (d >= 82 || d1 >= 70 || d2 >= 70)) {
+    playerLoc.x = playerLoc.x + 4;
+  }
+  if (walk[1] && (d >= 82 || d1 >= 70 || d2 >= 70)) {
+    playerLoc.x = playerLoc.x - 4;
+  }
+  if (walk[2] && (d >= 82 || d1 >= 70 || d2 >= 70)) {
+    playerLoc.y = playerLoc.y - 25;
+  }
+}
+//&& (bd >= 62 || bd1 >= 50 || bd2 >= 50)
+void mousePressed() {
+  float d = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 39, playerLoc.y + 20);  
+  float d1 = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 20, playerLoc.y + 90);
+  float d2 = dist(obstacle.x + 45, obstacle.y + 45, playerLoc.x + 20, playerLoc.y + 90);
+
+  println(mouseX, mouseY);
+  if (mouseX > 1000 - playerLoc.x + 180 && mouseX < 1090 - playerLoc.x + 180 && mouseY > 100 && mouseY < 190) {
+    click[0] = true;
+  }
+  if (mouseX > 1000 - obstacle.x + 350 && mouseX < 1200 - obstacle.x + 550 && mouseY > 230 && mouseY < 330 && (d <= 82 || d1 <= 70 || d2 <= 70)) {
+    click[1] = true;
+    println("yes");
+  }
+  if (mouseX > 1000 - obstacle.x + 350 && mouseX < 1200 - obstacle.x + 550 && mouseY > 380 && mouseY < 480 && (d <= 82 || d1 <= 70 || d2 <= 70)) {
+    click[2] = true;
+    println("ok");
+  }
+}
